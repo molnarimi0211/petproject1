@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: kopefalva
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: kopefalva
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: molnarimi0211/k8s:backend-3
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PGUSER
+              value: "postgres"
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rds-credentials
+                  key: password
+            - name: PGDATABASE
+              value: "kopefalva"
+            - name: PGHOST
+              value: "k8stest.c9co2w6o67ck.eu-west-3.rds.amazonaws.com"
+            - name: PGPORT
+              value: "5432"
+            - name: S3_BUCKET_NAME
+              value: "pet-d04"
+            - name: AWS_REGION
+              value: "eu-west-3"
