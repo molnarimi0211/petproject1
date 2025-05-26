@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: molnarimi0211/k8s:backend-3
+          image: molnarimi0211/k8s:backend-4
           ports:
             - containerPort: 3000
           env:
@@ -42,7 +42,7 @@ spec:
             - name: PGDATABASE
               value: "kopefalva"
             - name: PGHOST
-              value: "k8stest.c9co2w6o67ck.eu-west-3.rds.amazonaws.com"
+              value: "kopefalva.c9co2w6o67ck.eu-west-3.rds.amazonaws.com"
             - name: PGPORT
               value: "5432"
             - name: S3_BUCKET_NAME

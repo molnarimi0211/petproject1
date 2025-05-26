@@ -13,7 +13,7 @@ const Jatekok = () => {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const apiUrl = import.meta.env.VITE_API_URL || "http://backend.kopefalva.svc.cluster.local:3000";
+  const apiUrl = import.meta.env.VITE_API_URL || "http://backend.kopefalva.svc.cluster.local:3000/api/games";
 
   useEffect(() => {
     const fetchGames = async () => {
