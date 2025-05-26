@@ -1,4 +1,3 @@
-/*
 resource "aws_security_group" "rds" {
   name        = "${local.env}-rds-sg"
   description = "Allow access to RDS from EKS"
@@ -134,4 +133,3 @@ resource "aws_iam_openid_connect_provider" "oidc" {
   thumbprint_list = ["9e99a48a9960b14926bb7f3b02e22da0afd10f27"]
   url             = aws_eks_cluster.eks.identity[0].oidc[0].issuer
 }
-*/
