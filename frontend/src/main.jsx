@@ -1,17 +1,15 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-//import './index.css'
-import App from './App.jsx'
 import About from './About.jsx'
-import Fooldal from './Fooldal.jsx'
-import Jatekok from './Jatekok.jsx';
 import Navbar from './Navbar.jsx';
+import MainPage from './MainPage.jsx';
+import Games from './Games.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Fooldal />
+    element: <MainPage />
   },
   {
     path: '/about',
@@ -19,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/games',
-    element: <Jatekok />
+    element: <Games />
   }
 ])
 
