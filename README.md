@@ -14,9 +14,9 @@ The infrastructure is provisioned using Terraform and includes the following AWS
 
 ## Tech Stack
 
-- **Frontend**: HTML, CSS, JavaScript, React
-- **Backend**: Node.js with Express
-- **Infrastructure**:
+- Frontend: HTML, CSS, JavaScript, React
+- Backend: Node.js with Express
+- Infrastructure:
   - AWS EC2: Hosting the web application
   - AWS S3: Image storage
   - AWS RDS: Storing image descriptions and S3 links
