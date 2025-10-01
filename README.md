@@ -1,6 +1,6 @@
 # PetProject1
 
-This project is a simple multi-page web application that allows users to upload, view, and describe images. It runs entirely on AWS infrastructure and is managed using modern DevOps tools.
+This project is a simple multi-page web application. It runs entirely on AWS infrastructure and is managed using modern DevOps tools.
 
 ## Infrastructure
 
