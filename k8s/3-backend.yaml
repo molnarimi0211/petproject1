@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: molnarimi0211/k8s:backend-4
+          image: molnarimi0211/k8s:backend-12
           ports:
             - containerPort: 3000
           env:
