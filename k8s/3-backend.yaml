@@ -33,7 +33,7 @@ spec:
             - containerPort: 3000
           env:
             - name: PGUSER
-              value: "postgres"
+              value: "dbadmin"
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
