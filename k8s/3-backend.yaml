@@ -33,7 +33,7 @@ spec:
             - containerPort: 3000
           env:
             - name: PGUSER
-              value: "postgres"
+              value: "dbadmin"
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
@@ -42,7 +42,7 @@ spec:
             - name: PGDATABASE
               value: "kopefalva"
             - name: PGHOST
-              value: "kopefalva.c9co2w6o67ck.eu-west-3.rds.amazonaws.com"
+              value: "petprojekt-postgres.c9co2w6o67ck.eu-west-3.rds.amazonaws.com"
             - name: PGPORT
               value: "5432"
             - name: S3_BUCKET_NAME
