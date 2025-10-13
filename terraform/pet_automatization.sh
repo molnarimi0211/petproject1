@@ -8,39 +8,16 @@ RDS_HOST=$(terraform output -raw rds_endpoint)
 read -s -p "Enter PostgreSQL password for dbadmin: " DB_PASSWORD
 echo
 
-# Step 3: SSH into Bastion and run psql commands remotely
+# Step 3.1 Copy the SQL file to the Bastion host
+scp -i ~/Downloads/petproject-key.pem ../db_fillup.sql ubuntu@$BASTION_HOST:/home/ubuntu/
+
+
+# Step 3.2: SSH into Bastion and run psql commands remotely
 ssh -i ~/Downloads/petproject-key.pem ubuntu@$BASTION_HOST << EOF
 
 # Export password for psql session
 export PGPASSWORD="$DB_PASSWORD"
 
-# Step 4: Connect to RDS and execute SQL commands
-psql -h $RDS_HOST -p 5432 -U dbadmin -d kopefalva << SQL
-CREATE TABLE IF NOT EXISTS games (
-    id SERIAL PRIMARY KEY,
-    title TEXT NOT NULL,
-    description TEXT NOT NULL,
-    image VARCHAR(255) NOT NULL
-);
-
-INSERT INTO games (title, description, image) VALUES
-('Shooting Gallery', 'The old shooting gallery in a new guise. You have to hit the fake chicken leg patterned targets with Nerf guns.', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/shooting_gallery.jpg'),
-('Combi Sport Arena', 'The Combi Sport Arena is a multifunctional skill tool excellent for individual and team play.', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/combi_sport.jpg'),
-('Interactive Basketball', 'Have you ever been to a truly fantastic basketball game? As a fan or a player?', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/basketball_interactive.jpg'),
-('Battle Arena', 'The gigantic Battle Arena, where you''ll have exciting moments. Hide, sneak, and defend yourself!', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/battle_arena.jpg'),
-('Batak Pro', 'This game is a real reflex simulator. One game is 60 seconds, the goal is to swat down the flashing lights as fast as possible.', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/batak_pro.jpg'),
-('Royal Castle', 'Bouncy castle with a royal castle theme. It awaits children with exciting obstacles and slides.', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/kiralyi_varkastely.jpg'),
-('Robinson Island', 'Large bouncy castle with obstacles and a slide, a real adventure for all ages.', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/robinson_sziget.jpg'),
-('Giant Slide', 'A huge inflatable slide that provides an exciting experience for all ages.', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/orias_csuszda.jpg'),
-('Playful Obstacle Course', 'An exciting skill-based obstacle course, full of challenges and thrills.', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/jatek_akadaly.jpg'),
-('Giant Dart', 'A giant inflatable dartboard where you can throw balls at targets.', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/orias_dart.jpg'),
-('Mini Golf', 'A mobile mini-golf course where you have to get the ball through various obstacles.', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/mini_golf.jpg'),
-('Interactive Football', 'An interactive football pitch that improves shooting technique by kicking at various targets.', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/interaktiv_foci.jpg'),
-('Football Darts', 'Giant football darts is an exciting and entertaining game where players aim soccer balls at a huge dartboard, offering a unique challenge for lovers of football and target practice!', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/foci_darts.jpg'),
-('Billiards Football', 'Billiards football is an exciting and entertaining sport where the rules of traditional billiards are combined with the dynamics of football, offering new, fast-paced challenges to players!', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/biliard_foci.jpg'),
-('Carnival', 'A leisure park consisting of six show booths where you can test yourself with various skill games: throw, roll, flick, or aim', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/vurstli.jpg'),
-('Traffic Simulator', 'Experience the operation of a real motorcycle on closed urban and touring routes! Real motorcycle, simulated diverse tracks on a monitor, with built-in traffic situations.', 'https://kopefalva-d04.s3.eu-north-1.amazonaws.com/kozlek.jpg');
-SQL
-
+# Step 4: Connect to RDS and execute SQL commands from the file
+psql -h $RDS_HOST -p 5432 -U dbadmin -d kopefalva -f /home/ubuntu/db_fillup.sql
 EOF
-
