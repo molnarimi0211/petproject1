@@ -1,6 +1,6 @@
 # PetProject1
 
-This project is a simple multi-page web application. It runs entirely on AWS infrastructure and is managed using modern DevOps tools.
+This project simulates a multi-page web application. It runs entirely on AWS infrastructure and is managed using modern DevOps tools.
 
 ## Infrastructure
 
@@ -9,7 +9,6 @@ The infrastructure is provisioned using Terraform and includes the following AWS
 - VPC, Internet Gateway (IGW), Subnets, NAT Gateway
 - EKS Cluster with worker nodes
 - RDS for storing image metadata
-- S3 Bucket for storing uploaded images
 - IAM roles and policies for secure access
 
 ## Tech Stack
