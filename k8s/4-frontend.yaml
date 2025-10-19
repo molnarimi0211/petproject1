@@ -29,6 +29,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: molnarimi0211/k8s:frontend-5
+          image: molnarimi0211/k8s:frontend-10
           ports:
             - containerPort: 80
