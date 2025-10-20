@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-fillup-job
+  namespace: kopefalva
+spec:
+  ttlSecondsAfterFinished: 3600
+  backoffLimit: 1
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: psql-runner
+          image: postgres:17
+          command: ["psql"]
+          args:
+            [
+              "-h", "$(PGHOST)",
+              "-p", "$(PGPORT)",
+              "-U", "$(PGUSER)",
+              "-d", "$(PGDATABASE)",
+              "-f", "/scripts/db_fillup.sql"
+            ]
+          env:
+            - name: PGUSER
+              value: "dbadmin"
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rds-credentials
+                  key: password
+            - name: PGDATABASE
+              value: "kopefalva"
+            - name: PGHOST
+              value: "petprojekt-postgres.c9co2w6o67ck.eu-west-3.rds.amazonaws.com"
+            - name: PGPORT
+              value: "5432"
+          volumeMounts:
+            - name: sql-script
+              mountPath: /scripts
+      volumes:
+        - name: sql-script
+          configMap:
+            name: db-fillup-script
